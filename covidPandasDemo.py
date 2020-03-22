@@ -17,15 +17,17 @@ deaths = pd.read_csv(deaths_url)
 confirmed = pd.read_csv(confirmed_url)
 recovered = pd.read_csv(recovered_url)
 
+mostRecentDate = deaths.columns[-1]
+
 usDeaths = deaths['Country/Region'] == 'US'
-showDeaths = deaths[usDeaths][['Province/State', '3/20/20']]
-sortedDeaths = showDeaths.sort_values( by='3/20/20', ascending=False)
-top50Deaths = sortedDeaths[:50].plot(kind='bar',x='Province/State',y='3/20/20')
+showDeaths = deaths[usDeaths][['Province/State', mostRecentDate]]
+sortedDeaths = showDeaths.sort_values( by=mostRecentDate, ascending=False)
+top50Deaths = sortedDeaths[:50].plot(kind='bar',x='Province/State',y=mostRecentDate)
 
 usconfirmed = confirmed['Country/Region'] == 'US'
-showconfirmed = confirmed[usconfirmed][['Province/State', '3/20/20']]
-sortedconfirmed = showconfirmed.sort_values( by='3/20/20', ascending=False)
-top50confirmed = sortedconfirmed[:50].plot(kind='bar',x='Province/State',y='3/20/20')
+showconfirmed = confirmed[usconfirmed][['Province/State', mostRecentDate]]
+sortedconfirmed = showconfirmed.sort_values( by=mostRecentDate, ascending=False)
+top50confirmed = sortedconfirmed[:50].plot(kind='bar',x='Province/State',y=mostRecentDate)
 
 #usRecovered = recovered['Country/Region'] == 'US'
 ##hasComma = ',' in deaths['Province/State']
