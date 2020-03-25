@@ -4,6 +4,7 @@
 
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 
 #confirmed = pd.read_csv('time_series_19-covid-Confirmed.csv')
 #deaths = pd.read_csv('time_series_19-covid-Deaths.csv')
@@ -36,3 +37,10 @@ top50confirmed = sortedconfirmed[:50].plot(kind='bar',x='Province/State',y=mostR
 #plot = showDeaths.plot(kind='bar',x='Province/State',y='3/20/20')
 
 # added a random file
+
+A = np.array(['one', 'one', 'two', 'two', 'three', 'three'])
+B = np.array(['start', 'end']*3)
+C = [np.random.randint(10, 99, 6)]*6
+df = pd.DataFrame(zip(A, B, C), columns=['A', 'B', 'C'])
+df.set_index(['A', 'B'], inplace=True)
+df
