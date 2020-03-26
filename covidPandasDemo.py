@@ -38,6 +38,46 @@ top50confirmed = sortedconfirmed[:50].plot(kind='bar',x='Province/State',y=mostR
 
 # added a random file
 
+import matplotlib.font_manager as fm
+# Font Imports
+heading_font = fm.FontProperties(fname='PlayfairDisplay-Black.ttf', size=22)
+subtitle_font = fm.FontProperties(fname='Roboto-Regular.ttf', size=12)
+# Color Themes
+color_bg = '#FEF1E5'
+lighter_highlight = '#FAE6E1'
+darker_highlight = '#FBEADC'
+
+fig = plt.figure(figsize = (15,12))
+grid_size = (3,2)
+hosts_to_fmt = []
+# Place A Title On The Figure
+fig.text(x=0.8, y=0.95, s="Sources: John's Hopkins University",fontproperties=subtitle_font, horizontalalignment='left',color='#524939')
+# Overlay multiple plots onto the same axis, which spans 1 entire column of the figure
+large_left_ax = plt.subplot2grid(grid_size, (0,0), colspan=1, rowspan=3)
+
+mostRecentFrame.plot(ax=large_left_ax,
+    legend=True, color=['b', 'r'], title='All Tiers')
+# Second graph overlayed on the secondary y axis
+large_left_ax_secondary = mostRecentFrame.plot(
+    ax=large_left_ax, label='Years of Backlog', linestyle='dotted',
+    legend=True, secondary_y=True, color='g')
+# Adds the axis for formatting later
+hosts_to_fmt.extend([large_left_ax, large_left_ax_secondary])
+
+# For each City Tier overlay a series of graphs on an axis on the right hand column
+# Its row position determined by its index
+for index, tier in enumerate(draw_tiers[0:3]):
+    tier_axis = plt.subplot2grid(grid_size, (index,1))
+    
+    mostRecentFrame.plot(ax=tier_axis,title=tier, color='b', legend=False)
+    
+    ax1 = mostRecentFrame.plot(ax=tier_axis,linestyle='dashed', label='Purchased Units(sq.m,City Avg)', title=tier, legend=True, color='r')  
+    
+    ax2 =mostRecentFrame.plot(ax=tier_axis, linestyle='dotted', label='Yuan / sq.m', secondary_y=True, legend=True, color='black')
+    
+    ax2.set_ylim(0,30000)
+hosts_to_fmt.extend([ax1,ax2])
+
 A = np.array(['one', 'one', 'two', 'two', 'three', 'three'])
 B = np.array(['start', 'end']*3)
 C = [np.random.randint(10, 99, 6)]*6
