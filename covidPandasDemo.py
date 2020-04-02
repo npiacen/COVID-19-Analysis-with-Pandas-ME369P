@@ -4,6 +4,7 @@
 
 import pandas as pd
 import matplotlib.pyplot as plt
+import datetime
 
 # formatting for Jupyter Notebook
 pd.options.display.max_columns = None
@@ -51,7 +52,11 @@ finalFrame = countryFrames.transpose().reindex(index).transpose().set_index('Cou
 topAmount = 10
 finalFrame.iloc[:, :topAmount].plot(figsize=(15, 10), title = "Data from COVID in the Top {} Countries - {} as of {}".format(topAmount,dataName, mostRecentDate))
 
-dateForURL = '0' + mostRecentDate.replace('/','-')+ '20.csv' # will only work for a while
+#date logic
+month,day,year = map(int,mostRecentDate.split('/'))
+dateFormatted = datetime.date(year+2000,month,day)
+
+dateForURL = dateFormatted.strftime("%m-%d-%Y.csv") 
 mostRecent_url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/' + dateForURL
 mostRecentFrame = pd.read_csv(mostRecent_url)
 
@@ -71,7 +76,7 @@ selectedCountry = frameToPlot['Country_Region'] == 'US'
 frameToPlot[selectedState]
 
 ####################################
-######  MAKE A PRETTY PICTURE ######
+########  VISUALIZE THE DATA #######
 ####################################
 
 fig = plt.figure(figsize = (15,15))
